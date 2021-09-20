@@ -13,8 +13,9 @@ namespace PotatoShooter
     public partial class Game : Form
     {
         List<Cihla> cihly = new List<Cihla>();
+        Terc terc;
 
-        int rady = 5;
+        int rady = 9;
         int offset = 30;
         int cihelVRade = 0;
         float pomerVelikosti = 4;
@@ -22,23 +23,27 @@ namespace PotatoShooter
         public Game() {
             InitializeComponent();
 
-            int pouzitelnaSirka = panel1.Width - 2 * offset;
+            int pouzitelnaSirka = platno1.Width - 2 * offset;
             float sirkaCihly = Cihla.SIRKA * pomerVelikosti;
             cihelVRade = (int)(pouzitelnaSirka / sirkaCihly);
             int zbytek = (int)(pouzitelnaSirka - (sirkaCihly * cihelVRade));
             offset += zbytek / 2;
-
+            
             VytvorCihly();
+            terc = new Terc(1, 40, new Point(platno1.Width/2, platno1.Height/2));
         }
 
         private void VytvorCihly() {
+
+            Random r = new Random();
+
             for(int i = 0; i < rady; i++) {
                 
                 bool sudy = i % 2 == 0;
 
                 for(int j = 0; j < cihelVRade + (sudy ? 0 : -1); j++) {
                     cihly.Add(new Cihla(
-                        1,
+                        Cihla.GenerujTypCihly(r.Next(0,100)),
                         new Point(
                             
                             (int)((sudy ? 0 : (Cihla.SIRKA * pomerVelikosti / 2)) + offset + j * (Cihla.SIRKA * pomerVelikosti)),
@@ -51,10 +56,18 @@ namespace PotatoShooter
             }
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e) {
+        private void updateTimer_Tick(object sender, EventArgs e) {
+            platno1.Refresh();
+        }
 
+        private void platno1_Paint(object sender, PaintEventArgs e) {
             cihly.ForEach(cihla => cihla.Vykresli(e.Graphics));
+            terc.VykresliSe(e.Graphics);
+        }
 
+        private void targetTimer_Tick(object sender, EventArgs e) {
+            Random r = new Random();
+            terc.ZmenCilovouPozici(new Point(r.Next(0, platno1.Width), r.Next(0, platno1.Height)));
         }
     }
 }

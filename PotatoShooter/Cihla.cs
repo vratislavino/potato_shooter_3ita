@@ -24,12 +24,19 @@ namespace PotatoShooter
         private bool znicena = false;
 
 
-        private static Dictionary<int, Brush> barvy = new Dictionary<int, Brush>() {
+        public static Dictionary<int, Brush> barvy = new Dictionary<int, Brush>() {
             { 1, Brushes.Red },
             { 3, Brushes.Blue },
             { 5, Brushes.Purple }
         };
 
+        public static int GenerujTypCihly(int rand) { // rand: 0 - 100
+            if (rand < 70)
+                return 1;
+            if (rand < 90)
+                return 3;
+            return 5;
+        }
 
         public Cihla(int pocetBodu, Point pozice, float pomerVelikosti) {
             this.pocetBodu = pocetBodu;

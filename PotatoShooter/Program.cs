@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace PotatoShooter
 {
+    // https://github.com/vratislavino/potato_shooter_3ita
     static class Program
     {
         /// <summary>
