@@ -23,6 +23,8 @@ namespace PotatoShooter
 
         private bool znicena = false;
 
+        private float realSirka;
+        private float realVyska;
 
         public static Dictionary<int, Brush> barvy = new Dictionary<int, Brush>() {
             { 1, Brushes.Red },
@@ -42,6 +44,8 @@ namespace PotatoShooter
             this.pocetBodu = pocetBodu;
             this.pozice = pozice;
             this.pomerVelikosti = pomerVelikosti;
+            this.realSirka = SIRKA * pomerVelikosti;
+            this.realVyska = VYSKA * pomerVelikosti;
             this.barva = barvy[pocetBodu];
 
         }
@@ -51,27 +55,31 @@ namespace PotatoShooter
                 g.FillRectangle(Brushes.SkyBlue,
                     pozice.X,
                     pozice.Y,
-                    SIRKA * pomerVelikosti,
-                    VYSKA * pomerVelikosti
+                    realSirka,
+                    realVyska
                     );
             } else {
                 g.FillRectangle(barva, 
                     pozice.X, 
                     pozice.Y, 
-                    SIRKA * pomerVelikosti, 
-                    VYSKA * pomerVelikosti
+                    realSirka, 
+                    realVyska
                     );
                 g.DrawRectangle(Pens.DarkGray,
                     pozice.X,
                     pozice.Y,
-                    SIRKA * pomerVelikosti,
-                    VYSKA * pomerVelikosti
+                    realSirka,
+                    realVyska
                     );
             }
         }
 
         public void ZnicSe() {
             znicena = true;
+        }
+
+        public bool ObsahujePozici(Point p) {
+            return p.X > pozice.X && p.Y > pozice.Y && p.X < pozice.X + realSirka && p.Y < pozice.Y + realVyska;
         }
     }
 }

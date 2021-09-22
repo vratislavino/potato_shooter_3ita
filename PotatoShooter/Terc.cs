@@ -13,21 +13,32 @@ namespace PotatoShooter
         private int velikost;
         private Point pozice;
 
+        private float realX;
+        private float realY;
+
+        private float deltaX;
+        private float deltaY;
+
         public Point Pozice => pozice;
         //public Point Pozice { get { return pozice; } }
         
         private Pen barva;
         private Point cilovaPozice;
+        bool test = false;
 
         public Terc(float rychlost, int velikost, Point pozice) {
             this.rychlost = rychlost;
             this.velikost = velikost;
             this.pozice = pozice;
-            this.barva = new Pen(Color.Black, 3);
+            this.realX = pozice.X;
+            this.realY = pozice.Y;
+            this.barva = new Pen(Color.White, 3);
         }
 
         public void HniSe() {
-
+            realX += deltaX;
+            realY += deltaY;
+            pozice = new Point((int)realX, (int)realY);
         }
 
         public void VykresliSe(Graphics g) {
@@ -42,8 +53,20 @@ namespace PotatoShooter
                 velikostKruznice * 2);
         }
 
-        public void ZmenCilovouPozici(Point point) {
+        public void ZmenCilovouPozici(Point point, float deltaTime) {
+            test = true;
             cilovaPozice = point;
+            System.Diagnostics.Debug.WriteLine(cilovaPozice);
+
+            SpocitejDelty(deltaTime);
+        }
+
+        private void SpocitejDelty(float deltaTime) {
+            float x = cilovaPozice.X - pozice.X;
+            float y = cilovaPozice.Y - pozice.Y;
+
+            deltaX = x * deltaTime;
+            deltaY = y * deltaTime;
         }
     }
 }
