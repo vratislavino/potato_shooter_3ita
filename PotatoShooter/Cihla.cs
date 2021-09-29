@@ -22,6 +22,7 @@ namespace PotatoShooter
         private Point pozice;
 
         private bool znicena = false;
+        public bool IsZnicena => znicena;
 
         private float realSirka;
         private float realVyska;

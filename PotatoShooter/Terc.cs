@@ -24,7 +24,6 @@ namespace PotatoShooter
         
         private Pen barva;
         private Point cilovaPozice;
-        bool test = false;
 
         public Terc(float rychlost, int velikost, Point pozice) {
             this.rychlost = rychlost;
@@ -54,7 +53,6 @@ namespace PotatoShooter
         }
 
         public void ZmenCilovouPozici(Point point, float deltaTime) {
-            test = true;
             cilovaPozice = point;
             System.Diagnostics.Debug.WriteLine(cilovaPozice);
 

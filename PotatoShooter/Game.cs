@@ -41,6 +41,7 @@ namespace PotatoShooter
             VytvorCihly();
             terc = new Terc(1, 40, new Point(platno1.Width/2, platno1.Height/2));
             targetTimer.Start();
+
         }
 
         private void VytvorCihly() {
@@ -94,8 +95,19 @@ namespace PotatoShooter
         private void Shoot() {
             PocetStrel--;
             var trefena = cihly.FirstOrDefault(cihla => cihla.ObsahujePozici(terc.Pozice));
-            trefena.ZnicSe();
-            PocetBodu += trefena.PocetBodu;
+            if (trefena != null && !trefena.IsZnicena) {
+                trefena.ZnicSe();
+                PocetBodu += trefena.PocetBodu;
+            }
+            if(PocetStrel == 0) {
+                UkonciHru();
+            }
+        }
+
+        private void UkonciHru() {
+            KonecHry konec = new KonecHry();
+            konec.NastavText(PocetBodu);
+            konec.ShowDialog();
         }
     }
 }
